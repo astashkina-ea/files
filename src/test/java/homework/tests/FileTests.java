@@ -86,7 +86,7 @@ public class FileTests {
 
     @DisplayName("Проверка содержимого json файла")
     @Test
-    void jsonTestNG() throws Exception {
+    void jsonTest() throws Exception {
         try (InputStream is = classLoader.getResourceAsStream("homework/sh.json");
              InputStreamReader isr = new InputStreamReader(is)) {
             SmartHomePojo smartHomePojo = new ObjectMapper().readValue(isr, SmartHomePojo.class);
