@@ -16,6 +16,8 @@ dependencies {
     testImplementation 'com.codeborne:xls-test:1.4.3'
     testImplementation 'com.opencsv:opencsv:5.7.1'
     testImplementation 'com.google.code.gson:gson:2.10.1'
+    testImplementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
 }
 
 test {

@@ -1,4 +1,4 @@
-package guru.qa.parsing;
+package lesson.parsing;
 
 import com.codeborne.pdftest.PDF;
 import com.codeborne.selenide.Selenide;
@@ -6,7 +6,7 @@ import com.codeborne.xlstest.XLS;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.opencsv.CSVReader;
-import guru.qa.Human;
+import lesson.Human;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +14,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -67,19 +67,20 @@ public class FileParsingTest {
         try (InputStream isExpected = cl.getResourceAsStream("teachers.csv");
              InputStream downloaded = new FileInputStream(download)) {
             Assertions.assertEquals(
-                    Objects.hash(isExpected.readAllBytes()),
-                    Objects.hash(downloaded.readAllBytes())
+                    new String(isExpected.readAllBytes(), StandardCharsets.UTF_8),
+                    new String(downloaded.readAllBytes(), StandardCharsets.UTF_8)
             );
         }
     }
 
     @Test
     void zipTest() throws Exception {
-        try (InputStream is = cl.getResourceAsStream("sample.txt.zip");
+        try (InputStream is = cl.getResourceAsStream("1.txt.zip"); //достаем класслоадером зип файл
              ZipInputStream zs = new ZipInputStream(is)) {
             ZipEntry entry;
             while ((entry = zs.getNextEntry()) != null) {
-                Assertions.assertTrue(entry.getName().contains("sample.txt"));
+                //Assertions.assertEquals("1.txt", entry.getName());
+                Assertions.assertTrue(entry.getName().contains("1.txt"));
             }
         }
     }

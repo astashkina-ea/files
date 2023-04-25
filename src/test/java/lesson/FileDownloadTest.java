@@ -1,4 +1,4 @@
-package guru.qa;
+package lesson;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.FileDownloadMode;
