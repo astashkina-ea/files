@@ -41,11 +41,7 @@ public class FileTests {
             while ((entry = zis.getNextEntry()) != null) {
                 if (entry.getName().contains("pdf") && !entry.getName().contains("MACOSX")) {
                     PDF pdf = new PDF(zis);
-                    System.out.println(pdf.text);
-                    System.out.println();
-                    System.out.println(FILE_PDF);
                     Assertions.assertTrue(pdf.text.contains(FILE_PDF));
-
                 }
             }
         }
