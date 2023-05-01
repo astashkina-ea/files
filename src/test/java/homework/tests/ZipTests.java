@@ -16,7 +16,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 @DisplayName("Чтение и проверка сожержимого каждого файла")
-public class FileTests {
+public class ZipTests {
     private static final String FILE_PDF = "Предварительные выводы неутешительны: повышение уровня гражданского \n" +
             "сознания играет определяющее значение для переосмысления \n" +
             "внешнеэкономических политик.";
@@ -29,7 +29,7 @@ public class FileTests {
             {"Masha", "24", "Moscow"}
     };
 
-    private ClassLoader classLoader = FileTests.class.getClassLoader();
+    private ClassLoader classLoader = ZipTests.class.getClassLoader();
 
     @DisplayName("Чтение и проверка сожержимого pdf")
     @Test
