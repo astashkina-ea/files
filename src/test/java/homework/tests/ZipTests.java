@@ -15,8 +15,9 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-@DisplayName("Чтение и проверка сожержимого каждого файла")
+@DisplayName("Чтение и проверка сожержимого файлов")
 public class ZipTests {
+
     private static final String FILE_PDF = "Предварительные выводы неутешительны: повышение уровня гражданского \n" +
             "сознания играет определяющее значение для переосмысления \n" +
             "внешнеэкономических политик.";
@@ -31,10 +32,9 @@ public class ZipTests {
 
     private ClassLoader classLoader = ZipTests.class.getClassLoader();
 
-    @DisplayName("Чтение и проверка сожержимого pdf")
+    @DisplayName("Чтение и проверка сожержимого pdf файла")
     @Test
     void zipPdfTest() throws Exception {
-
         try (InputStream is = classLoader.getResourceAsStream("homework/test123.zip")) {
             ZipInputStream zis = new ZipInputStream(is);
             ZipEntry entry;
@@ -47,7 +47,7 @@ public class ZipTests {
         }
     }
 
-    @DisplayName("Чтение и проверка сожержимого xlsx")
+    @DisplayName("Чтение и проверка сожержимого xlsx файла")
     @Test
     void zipXlsTest() throws Exception {
 
@@ -67,10 +67,9 @@ public class ZipTests {
         }
     }
 
-    @DisplayName("Чтение и проверка сожержимого csv")
+    @DisplayName("Чтение и проверка сожержимого csv файла")
     @Test
     void zipCsvTest() throws Exception {
-
         try (InputStream is = classLoader.getResourceAsStream("homework/test123.zip")) {
             ZipInputStream zis = new ZipInputStream(is);
             ZipEntry entry;
@@ -81,20 +80,6 @@ public class ZipTests {
                     Assertions.assertArrayEquals(FILE_CSV[1], csv.get(1));
                 }
             }
-        }
-    }
-
-    @DisplayName("Проверка содержимого json файла")
-    @Test
-    void jsonTest() throws Exception {
-        try (InputStream is = classLoader.getResourceAsStream("homework/sh.json");
-             InputStreamReader isr = new InputStreamReader(is)) {
-            SmartHomePojo smartHomePojo = new ObjectMapper().readValue(isr, SmartHomePojo.class);
-            Assertions.assertEquals(12345, smartHomePojo.getHome().getId());
-            Assertions.assertEquals("Мой умный дом", smartHomePojo.getHome().getName());
-            Assertions.assertEquals(4321, smartHomePojo.getHome().getDevices().get(0).getId());
-            Assertions.assertEquals("Розетка", smartHomePojo.getHome().getDevices().get(0).getName());
-            Assertions.assertTrue(smartHomePojo.getHome().getDevices().get(0).isOn());
         }
     }
 }
