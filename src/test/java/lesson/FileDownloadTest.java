@@ -1,14 +1,12 @@
 package lesson;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.FileDownloadMode;
 import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
@@ -22,7 +20,6 @@ import static com.codeborne.selenide.Selenide.$$;
 //непроверяемые - заранее не описаны - RuntimeException, Error
 //проверяемые - описаны - все исключенения, которые наследованы от Exception, проверяемые
 public class FileDownloadTest {
-
 
     //скачивание файлов
     @Test
@@ -54,33 +51,34 @@ public class FileDownloadTest {
     //способ который не будет работать в ci
     @Test
     void uploadFile1() {
-        //Configuration. pageLoadStrategy="eager";
+        Configuration. pageLoadStrategy="eager";
         Selenide.open("https://the-internet.herokuapp.com/upload");
-        $("input[type='file']").uploadFile(new File("src/test/resources/png-transparent-cat-animal-lovely-cat.png"));
+        $("input[type='file']").uploadFile(new File("src/test/resources/lesson/png-transparent-cat-animal-lovely-cat.png"));
     }
 
     //способ который будет работать всегде
     //корень папака ресурсы
     @Test
     void uploadFile2() {
+        Configuration. pageLoadStrategy="eager";
         Selenide.open("https://the-internet.herokuapp.com/upload");
-        $("input[type='file']").uploadFromClasspath("png-transparent-cat-animal-lovely-cat.png"); //выбор файла
+        $("input[type='file']").uploadFromClasspath("lesson/png-transparent-cat-animal-lovely-cat.png"); //выбор файла
         $("#file-submit").click();
     }
 
     @Test
     void uploadFile3() {
         Selenide.open("https://fineuploader.com/demos.html");
-        $("input[type='file']").uploadFromClasspath("1.txt"); //выбор файла
+        $("input[type='file']").uploadFromClasspath("lesson/sample.txt"); //выбор файла
         $$("div.qq-dialog-message-selector")
-                .find(text("1.txt has an invalid extension. Valid extension(s): jpeg, jpg, gif, png.")).shouldBe(visible);
+                .find(text("sample.txt has an invalid extension. Valid extension(s): jpeg, jpg, gif, png.\n")).shouldBe(visible);
     }
 
     @Test
     void uploadTest() {
         Configuration.pageLoadStrategy = "eager";
         Selenide.open("https://tus.io/demo.html");
-        $("input[type='file']").uploadFromClasspath("png-transparent-cat-animal-lovely-cat.png");
+        $("input[type='file']").uploadFromClasspath("lesson/png-transparent-cat-animal-lovely-cat.png");
         $("#js-upload-container").shouldHave(text("The upload is complete!"));
     }
 }

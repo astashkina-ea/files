@@ -1,6 +1,7 @@
 package lesson.parsing;
 
 import com.codeborne.pdftest.PDF;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.xlstest.XLS;
 import com.google.gson.Gson;
@@ -26,8 +27,9 @@ public class FileParsingTest {
 
     @Test
     void pdfParseTest() throws Exception {
+        Configuration. pageLoadStrategy="eager";
         Selenide.open("https://junit.org/junit5/docs/current/user-guide/");
-        File download = $("a[href*='junit-user-guide-5.9.2.pdf']").download();
+        File download = $("a[href*='junit-user-guide-5.9.3.pdf']").download();
         PDF pdf = new PDF(download);
         Assertions.assertEquals(
                 "Stefan Bechtold, Sam Brannen, Johannes Link, Matthias Merdes, Marc Philipp, Juliette de Rancourt, Christian Stein",
@@ -51,7 +53,7 @@ public class FileParsingTest {
 
     @Test
     void csvParseTest() throws Exception {
-        try (InputStream is = cl.getResourceAsStream("teachers.csv");
+        try (InputStream is = cl.getResourceAsStream("lesson/expectedFiles/teachers.csv");
              InputStreamReader isr = new InputStreamReader(is)) { // CSVReader чтение посимвольно
             CSVReader csvReader = new CSVReader(isr); //считывает все
             List<String[]> content = csvReader.readAll(); //лист массивов стрингов
@@ -64,7 +66,7 @@ public class FileParsingTest {
     void filesEqualsTest() throws Exception {
         Selenide.open("https://github.com/astashkina-ea/files/blob/master/src/test/resources/teachers.csv");
         File download = $("#raw-url").download();
-        try (InputStream isExpected = cl.getResourceAsStream("teachers.csv");
+        try (InputStream isExpected = cl.getResourceAsStream("lesson/expectedFiles/teachers.csv");
              InputStream downloaded = new FileInputStream(download)) {
             Assertions.assertEquals(
                     new String(isExpected.readAllBytes(), StandardCharsets.UTF_8),
@@ -75,7 +77,7 @@ public class FileParsingTest {
 
     @Test
     void zipTest() throws Exception {
-        try (InputStream is = cl.getResourceAsStream("1.txt.zip"); //достаем класслоадером зип файл
+        try (InputStream is = cl.getResourceAsStream("lesson/sample.zip"); //достаем класслоадером зип файл
              ZipInputStream zs = new ZipInputStream(is)) {
             ZipEntry entry;
             while ((entry = zs.getNextEntry()) != null) {
@@ -88,7 +90,7 @@ public class FileParsingTest {
     @Test
     void jsonTest() throws Exception {
         Gson gson = new Gson();
-        try (InputStream is = cl.getResourceAsStream("human.json");
+        try (InputStream is = cl.getResourceAsStream("lesson/human.json");
              InputStreamReader isr = new InputStreamReader(is)) {
             JsonObject jsonObject = gson.fromJson(isr, JsonObject.class);
 
@@ -100,7 +102,7 @@ public class FileParsingTest {
     @Test
     void jsonCleverTest() throws Exception {
         Gson gson = new Gson();
-        try (InputStream is = cl.getResourceAsStream("human.json");
+        try (InputStream is = cl.getResourceAsStream("lesson/human.json");
              InputStreamReader isr = new InputStreamReader(is)) {
             Human human = gson.fromJson(isr, Human.class);
 
