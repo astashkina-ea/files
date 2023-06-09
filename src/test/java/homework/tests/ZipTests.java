@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-@DisplayName("Чтение и проверка сожержимого файлов")
+@DisplayName("Чтение и проверка файлов")
 public class ZipTests {
 
     private static final String FILE_PDF = "Предварительные выводы неутешительны: повышение уровня гражданского \n" +
